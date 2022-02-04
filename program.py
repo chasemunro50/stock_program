@@ -138,3 +138,19 @@ def linear_regression(x,stock_open_list,stock_close_list):
 
   return regression_line
 
+#Runs all functions seen above
+def execute():
+  try:
+    #Downloading Dataframe
+    stock_data = user_input()
+    x = int(input('How many days ahead would you like your prediction?\n>'))
+
+    #Returning stock open and close
+    stock_open_list, stock_close_list = list_converter(stock_data)
+
+    #Calculating & Printing gain loss, percentage change, and point prediction
+    gain_loss, first_open = calculate_gain_loss(stock_open_list, stock_close_list)
+    percentage_calculator(gain_loss, first_open)
+    linear_regression(x,stock_open_list,stock_close_list)
+  except IndexError:
+    print('Something went wrong, please make sure your start date is before your end.')
