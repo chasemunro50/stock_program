@@ -110,12 +110,14 @@ def linear_regression(x,stock_open_list,stock_close_list):
   for y in stock_close_list:
     x += 1 
 
-    #Something going wrong with math here
+    #MX Calculation not correct
     print('x value: {}'.format(x))
+    print(type(m))
+    print(type(x))
     print('m value: {}'.format(m))
     print('b value: {}'.format(b))
     print('mx value: {}'.format(m * x))
-    linear_estimate = m*x+b
+    linear_estimate = (m*float(x)+float(b))
     y_line_of_best_fit.append(linear_estimate)
 
     TSS_remainder = y-y_mean
