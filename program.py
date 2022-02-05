@@ -110,8 +110,9 @@ def linear_regression(x,stock_open_list,stock_close_list):
 
   for y in stock_close_list:
     x += 1 
-    x = float(x)
+  
     #MX Calculation not correct - Datatypes?
+    x = float(x)
     print('x value: {}'.format(x))
     print('m value: {}'.format(m))
     print('b value: {}'.format(b))
@@ -136,7 +137,7 @@ def linear_regression(x,stock_open_list,stock_close_list):
   plt.plot(x_values, y_line_of_best_fit)
   plt.xlabel('Days')
   plt.ylabel('Share Price')
-  plt.title('Graph of Stock Share Price Over Time')
+  plt.title('Stock Share Price')
   plt.show()
 
   return regression_line
