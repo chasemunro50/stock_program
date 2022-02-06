@@ -135,6 +135,8 @@ def linear_regression(x,stock_open_list,stock_close_list):
   plt.title('Stock Share Price')
   plt.show()
 
+  return regression_line
+
 
 #Runs all functions seen above
 def execute():
