@@ -19,7 +19,7 @@ def user_input():
         user_start_formatted = date.fromisoformat(user_start)
         user_stop_formatted = date.fromisoformat(user_stop)
 
-        #Getting Ticker Data From yfinance
+        #Getting ticker Data From yfinance
         stock_data = yf.download(user_stock, start=user_start_formatted,end=user_stop_formatted)
         repeat = False
 
@@ -56,7 +56,7 @@ def calculate_gain_loss(stock_open_list, stock_close_list):
   return gain_loss, first_open
 
 
-#Calculates & Displays change in %
+#Calculates & displays percentage change
 def percentage_calculator(gain_loss, first_open):
 
   percentage = (gain_loss / first_open)*100
@@ -117,7 +117,6 @@ def linear_regression(x,stock_open_list,stock_close_list):
     x += 1 
     linear_estimate = m*x+b
     y_line_of_best_fit.append(linear_estimate)
-
     TSS_remainder = y-y_mean
     SSR_remainder = linear_estimate-y_mean
     TSS += TSS_remainder**2
@@ -126,11 +125,9 @@ def linear_regression(x,stock_open_list,stock_close_list):
   cd_ratio = SSR/TSS
   coefficient_determination = 1 - cd_ratio
   
-  ##Print Statements
+  #Printing
   print('Point Prediction: {:.2f}'.format(regression_line))
   print("Coefficient of determination: {}".format(coefficient_determination))
-
-  #Graphing
   plt.plot(x_values, y_values)
   plt.plot(x_values, y_line_of_best_fit)
   plt.xlabel('Days')
@@ -138,11 +135,10 @@ def linear_regression(x,stock_open_list,stock_close_list):
   plt.title('Stock Share Price')
   plt.show()
 
-  return regression_line
-
 
 #Runs all functions seen above
 def execute():
+
   try:
     #Downloading Dataframe
     stock_data = user_input()
@@ -155,5 +151,6 @@ def execute():
     gain_loss, first_open = calculate_gain_loss(stock_open_list, stock_close_list)
     percentage_calculator(gain_loss, first_open)
     linear_regression(x,stock_open_list,stock_close_list)
+
   except IndexError:
-    print('Something went wrong, please make sure your start date is before your end.')
+    print('Something went wrong, please try again.')
