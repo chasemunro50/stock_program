@@ -1,6 +1,5 @@
 import yfinance as yf
 import matplotlib.pyplot as plt
-import numpy as np
 from datetime import date
 
 
@@ -109,17 +108,9 @@ def linear_regression(x,stock_open_list,stock_close_list):
   y_line_of_best_fit = []
 
   for y in stock_close_list:
+    
     x += 1 
-  
-    #MX Calculation not correct - Datatypes?
-    x = float(x)
-    print('x value: {}'.format(x))
-    print('m value: {}'.format(m))
-    print('b value: {}'.format(b))
-    print('mx value: {}'.format(m * x))
-    #linear_estimate = m*x+b
-    linear_estimate = np.multiply(m,x)
-    linear_estimate += b
+    linear_estimate = m*x+b
     y_line_of_best_fit.append(linear_estimate)
 
     TSS_remainder = y-y_mean
