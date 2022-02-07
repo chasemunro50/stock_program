@@ -138,6 +138,18 @@ def linear_regression(x,stock_open_list,stock_close_list):
   return regression_line
 
 
+'''
+def graph(x_values, y_values, y_line_of_best_fit):
+
+  plt.plot(x_values, y_values)
+  plt.plot(x_values, y_line_of_best_fit)
+  plt.xlabel('Days')
+  plt.ylabel('Share Price')
+  plt.title('Stock Share Price')
+  plt.show()
+'''
+
+
 #Runs all functions seen above
 def execute():
 
