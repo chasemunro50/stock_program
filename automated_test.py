@@ -1,8 +1,8 @@
 import yfinance as yf
 from program import  calculate_gain_loss, list_converter, linear_regression
-import sys
-sys.path.insert(1, '/Users/cmunro50/Desktop/PythonMasterClass/stock_program/logging/')
-from logger import tests_passed, test_failed
+#import sys
+#sys.path.insert(1, '/Users/cmunro50/Desktop/PythonMasterClass/stock_program/logging/')
+from .logging.logger import tests_passed, test_failed
 
 #Automated test function
 def run_tests():
