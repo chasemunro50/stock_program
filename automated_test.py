@@ -20,7 +20,7 @@ def run_tests():
   stock_data = yf.download(stock, start = start, end = stop)
   stock_open_list, stock_close_list = list_converter(stock_data)
 
-  #Calling functions to test, storing outputs in list
+  #Calling functions to test, storing outputs in list 
   gain_loss, first_open = calculate_gain_loss(stock_open_list, stock_close_list)
   last_close = stock_close_list[-1]
   regression_line = linear_regression(x,stock_open_list,stock_close_list)
