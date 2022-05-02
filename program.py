@@ -19,7 +19,7 @@ def user_input():
         user_start_formatted = date.fromisoformat(user_start)
         user_stop_formatted = date.fromisoformat(user_stop)
 
-        #Getting Ticker Data From yfinance
+        #Getting ticker Data From yfinance
         stock_data = yf.download(user_stock, start=user_start_formatted,end=user_stop_formatted)
         repeat = False
 
@@ -27,6 +27,7 @@ def user_input():
       print('-'*35,'\nPlease make sure your entering the correct value/format')
 
   return stock_data
+
 
 #Indexes open & close from ticker dataframe, converts to list, 
 def list_converter(stock_data):
@@ -39,6 +40,7 @@ def list_converter(stock_data):
   stock_open_list = stock_open.tolist()
   stock_close_list = stock_close.tolist()
   return stock_open_list, stock_close_list
+
 
 #Calculates gain/loss by subtracting last close from first open
 def calculate_gain_loss(stock_open_list, stock_close_list):
@@ -53,29 +55,37 @@ def calculate_gain_loss(stock_open_list, stock_close_list):
   print('Total Gain / Loss: {:.2f}'.format(gain_loss))
   return gain_loss, first_open
 
-#Calculates & Displays change in %
+
+#Calculates & displays percentage change
 def percentage_calculator(gain_loss, first_open):
 
   percentage = (gain_loss / first_open)*100
   print('Increase / Decrease as a percentage {:.2f}%'.format(percentage))
 
+
 #Line of best fit & coefficient of determination
 def linear_regression(x,stock_open_list,stock_close_list):
+
+  #Assigning variables
   x_values = []
   y_values = []
-  ##Linear Regression
-  #variables for calculation
   n = len(stock_close_list)
   sum_x = 0
   sum_y = 0
   sum_x_squared = 0
   sum_xy = 0
   counter = 0
+  y_line_of_best_fit = []
+  TSS = 0
+  SSR = 0
 
   #Calculating sums of x, y, x squared
   for x,y in zip(range(0, (len(stock_open_list))),stock_close_list):
+
+    #Adding previous values to list for graphing
     x_values.append(x)
     y_values.append(y)
+
     counter +=1
     sum_x = sum_x + counter
     sum_x_squared +=counter**2
@@ -97,22 +107,16 @@ def linear_regression(x,stock_open_list,stock_close_list):
   #y=mx+b Calculation
   x +=n
   regression_line = m*x+b
-  print('Point Prediction: {:.2f}'.format(regression_line))
 
   ##Coeffecient of Determination 
   y_mean = sum_y/counter
-  TSS = 0
-  SSR = 0
   x = 0
 
-  y_line_of_best_fit = []
-
   for y in stock_close_list:
-    
+
     x += 1 
     linear_estimate = m*x+b
     y_line_of_best_fit.append(linear_estimate)
-
     TSS_remainder = y-y_mean
     SSR_remainder = linear_estimate-y_mean
     TSS += TSS_remainder**2
@@ -121,9 +125,9 @@ def linear_regression(x,stock_open_list,stock_close_list):
   cd_ratio = SSR/TSS
   coefficient_determination = 1 - cd_ratio
   
+  #Printing
+  print('Point Prediction: {:.2f}'.format(regression_line))
   print("Coefficient of determination: {}".format(coefficient_determination))
-
-  #Graphing
   plt.plot(x_values, y_values)
   plt.plot(x_values, y_line_of_best_fit)
   plt.xlabel('Days')
@@ -133,8 +137,22 @@ def linear_regression(x,stock_open_list,stock_close_list):
 
   return regression_line
 
+
+'''
+def graph(x_values, y_values, y_line_of_best_fit):
+
+  plt.plot(x_values, y_values)
+  plt.plot(x_values, y_line_of_best_fit)
+  plt.xlabel('Days')
+  plt.ylabel('Share Price')
+  plt.title('Stock Share Price')
+  plt.show()
+'''
+
+
 #Runs all functions seen above
 def execute():
+
   try:
     #Downloading Dataframe
     stock_data = user_input()
@@ -147,5 +165,6 @@ def execute():
     gain_loss, first_open = calculate_gain_loss(stock_open_list, stock_close_list)
     percentage_calculator(gain_loss, first_open)
     linear_regression(x,stock_open_list,stock_close_list)
+
   except IndexError:
-    print('Something went wrong, please make sure your start date is before your end.')
+    print('Something went wrong, please try again.')
